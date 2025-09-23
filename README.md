@@ -110,6 +110,92 @@ Nota: ZeroTier mantiene instaladores oficiales que el script utiliza de forma no
 
 ---
 
+## Conectar un nuevo dispositivo desde cero (paso a paso)
+
+Sigue estos pasos según tu plataforma para unir un nuevo equipo a tu red ZeroTier y verificar la conectividad.
+
+Prerequisitos:
+- Tener el `NETWORK_ID` de tu red (en https://my.zerotier.com → Networks).
+- Acceso para autorizar miembros en ZeroTier Central.
+
+### Opción A: Linux / Raspberry Pi (Debian/Ubuntu)
+
+1) Instalar y unir usando este script (recomendado):
+
+```bash
+# Clonar o copiar el script en el equipo
+chmod +x zerotier-rpi-setup.sh
+sudo ./zerotier-rpi-setup.sh -n <NETWORK_ID>
+```
+
+2) Autoriza el nuevo miembro en ZeroTier Central (si aparece como PENDING).
+
+3) Verifica estado y IP asignada:
+
+```bash
+sudo zerotier-cli status
+sudo zerotier-cli listnetworks
+ip -o -4 addr show | awk '/zt/{print $4}'
+```
+
+4) (Opcional) Probar ping a otro miembro: `ping <IP_ZeroTier_del_peer>`
+
+5) Conectarte por SSH a una Raspberry: `ssh pi@<IP_ZeroTier>`
+
+—
+
+Alternativa manual (sin script):
+
+```bash
+curl -s https://install.zerotier.com | sudo bash
+sudo zerotier-cli join <NETWORK_ID>
+# Autoriza el miembro en Central y verifica con:
+sudo zerotier-cli listnetworks
+```
+
+### Windows
+
+1) Descarga e instala "ZeroTier One" desde https://www.zerotier.com/download/.
+2) Abre el icono de ZeroTier en la bandeja del sistema → Join Network → pega `<NETWORK_ID>` → Join.
+3) En ZeroTier Central autoriza el nuevo miembro.
+4) Comprueba la IP asignada en la app de ZeroTier o con `ipconfig` (adaptador ZeroTier).
+5) Prueba conectividad con `ping <IP_ZeroTier_del_peer>`.
+
+### macOS
+
+1) Descarga el instalador (.pkg) desde https://www.zerotier.com/download/ e instálalo.
+2) Menú de ZeroTier (barra superior) → Join Network → `<NETWORK_ID>`.
+3) Autoriza el miembro en Central.
+4) Verifica IP en la app de ZeroTier o con `ifconfig` (interfaz `zt*`).
+5) Prueba `ping <IP_ZeroTier_del_peer>`.
+
+### Android / iOS
+
+1) Instala "ZeroTier One" desde Google Play / App Store.
+2) Abre la app → Add Network → introduce `<NETWORK_ID>` y activa el toggle.
+3) Autoriza el miembro en Central.
+4) La app mostrará la IP asignada; prueba conectividad con herramientas de red o hacia otro miembro.
+
+### Salir de la red / Desinstalar
+
+- Linux con el script:
+  - Salir de la red: `sudo ./zerotier-rpi-setup.sh -n <NETWORK_ID> --leave`
+  - Desinstalar: `sudo ./zerotier-rpi-setup.sh --uninstall`
+
+- Manual Linux:
+  - Salir: `sudo zerotier-cli leave <NETWORK_ID>`
+  - Desinstalar (Debian/Ubuntu): `sudo apt purge zerotier-one && sudo apt autoremove`
+
+- Windows/macOS:
+  - Salir: desde la app ZeroTier → Leave Network.
+  - Desinstalar: métodos estándar del sistema (Agregar/Quitar programas, mover a Papelera).
+
+Notas:
+- Tras autorizar, el estado debe verse como `OK` en `zerotier-cli listnetworks` y tendrás una IP del pool configurado (por ejemplo 192.168.194.0/24).
+- Si no recibes IP, revisa los Pools (Auto-Assign) y reglas en la red de ZeroTier.
+
+---
+
 ## Solución de problemas
 
 - Miembro en PENDING y sin IP: Ingresa a https://my.zerotier.com, abre tu red y autoriza el nuevo miembro (checkbox de Auth). Asegúrate de que la red tenga rangos de direcciones configurados (Auto-Assign) si esperas una IP gestionada.
