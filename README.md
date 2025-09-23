@@ -1,4 +1,18 @@
-# zerotier-rpi-setup
+
+[![Python](https://img.shields.io/badge/Python-3.11-brightgreen)](https://www.python.org/) 
+![GitHub issues](https://img.shields.io/github/issues/rotoapanta/serial-tilt-zbx) 
+![GitHub repo size](https://img.shields.io/github/repo-size/rotoapanta/serial-tilt-zbx) 
+![GitHub last commit](https://img.shields.io/github/last-commit/rotoapanta/serial-tilt-zbx)
+[![Discord Invite](https://img.shields.io/badge/discord-join%20now-green)](https://discord.gg/bf6rWDbJ) 
+[![Docker](https://img.shields.io/badge/Docker-No-brightgreen)](https://www.docker.com/) 
+[![Linux](https://img.shields.io/badge/Linux-Supported-brightgreen)](https://www.linux.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![Author](https://img.shields.io/badge/Roberto%20-Toapanta-brightgreen)](https://www.linkedin.com/in/roberto-carlos-toapanta-g/) 
+[![Version](https://img.shields.io/badge/Version-1.0.0-brightgreen)](#registro-de-cambios) 
+![GitHub forks](https://img.shields.io/github/forks/rotoapanta/serial-tilt-zbx?style=social) 
+
+# <p align="center">Zerotier rpi setup</p>
+
 
 Script Bash para instalar, unir, verificar y desinstalar ZeroTier One en Raspberry Pi (y sistemas basados en Debian/Ubuntu en general). Automatiza la instalación del servicio, la unión a una red, la espera de autorización en ZeroTier Central y una prueba de conectividad opcional con ping. También permite abandonar una red o desinstalar ZeroTier.
 
@@ -169,12 +183,22 @@ sudo zerotier-cli listnetworks
 4) Verifica IP en la app de ZeroTier o con `ifconfig` (interfaz `zt*`).
 5) Prueba `ping <IP_ZeroTier_del_peer>`.
 
-### Android / iOS
+### iPhone (iOS)
 
-1) Instala "ZeroTier One" desde Google Play / App Store.
-2) Abre la app → Add Network → introduce `<NETWORK_ID>` y activa el toggle.
-3) Autoriza el miembro en Central.
-4) La app mostrará la IP asignada; prueba conectividad con herramientas de red o hacia otro miembro.
+1) Instala "ZeroTier One" desde App Store: https://apps.apple.com/app/zerotier-one/id1085978097
+2) Abre ZeroTier → Join Network (+) → introduce `<NETWORK_ID>`.
+3) Cuando iOS lo pida, pulsa "Permitir" para añadir la configuración de VPN (se creará un perfil de VPN).
+4) Activa el interruptor de la red. Si no se conecta, ve a Ajustes → VPN y activa "ZeroTier".
+5) En ZeroTier Central autoriza el nuevo miembro.
+6) Verifica la IP asignada dentro de la app (interfaz `zt*`) y que el estado sea "OK".
+7) Prueba acceso a otros miembros:
+   - SSH a una Raspberry: usa una app como Termius/Blink y conéctate a `ssh pi@<IP_ZeroTier_del_equipo>`.
+   - HTTP/Servicios: accede a `http(s)://<IP_ZeroTier_del_equipo>:<puerto>` si hay servicios expuestos.
+
+Notas iOS:
+- Si no responde a ping ICMP, no es inusual en iOS; valida conectividad intentando SSH/HTTP hacia otros miembros.
+- Para mantener la conexión en segundo plano, deja activo el VPN de ZeroTier en Ajustes. Evita modos de ahorro extremo de batería.
+- iCloud Private Relay o perfiles MDM con restricciones pueden interferir con la VPN.
 
 ### Salir de la red / Desinstalar
 
@@ -225,12 +249,102 @@ Esto detiene el servicio, realiza `apt purge zerotier-one` y `apt autoremove`.
 
 ---
 
-## Contribuciones
+## Comentarios
 
-Las mejoras y sugerencias son bienvenidas. Abre un issue o envía un PR con cambios descriptivos.
+Si tienes comentarios o sugerencias, contáctanos en robertocarlos.toapanta@gmail.com
 
----
+## Soporte
+
+Para soporte, escribe a robertocarlos.toapanta@gmail.com o únete a nuestro canal de Discord.
 
 ## Licencia
 
-Este repositorio no incluye una licencia explícita. Si necesitas una, considera agregar una (por ejemplo MIT) según tus necesidades.
+[MIT](https://opensource.org/licenses/MIT)
+
+## Autores
+
+- [@rotoapanta](https://github.com/rotoapanta)
+
+## Registro de cambios
+
+Este proyecto sigue el formato Keep a Changelog y Semantic Versioning.
+
+[Unreleased]
+- 
+
+- 1.0.0 – 2025-09-23
+  - Añadido:
+    - Numeración de progreso “Paso X/Y” en el flujo principal del script.
+    - Guía de conexión desde cero por plataforma (Linux/Raspberry Pi, Windows, macOS, Android, iPhone iOS).
+  - Cambiado:
+    - Sugerencias finales simplificadas para evitar expansiones complejas de shell.
+  - Corregido:
+    - Expansión accidental de `$1` bajo `set -u` en una sugerencia impresa.
+  - Documentación:
+    - README reorganizado con secciones nuevas: iPhone (iOS), Change log y “Más información (de acuerdo a este proyecto)”.
+
+- 0.3.1 – 2025-09-23
+  - Corregido:
+    - Comillas/codificación extraña en el README.
+  - Cambiado:
+    - Sugerencias finales del script simplificadas para evitar expansión de variables con `set -u`.
+
+- 0.3.0 – 2025-09-23
+  - Añadido:
+    - Guía “Conectar un nuevo dispositivo desde cero” por plataforma (Linux/Raspberry Pi, Windows, macOS, Android, iPhone iOS).
+    - Sección específica para iPhone (iOS) con pasos y notas.
+  - Cambiado:
+    - Salida del script con “Paso X/Y” para visualizar el progreso.
+  - Corregido:
+    - Evitada la expansión de `$1` bajo `set -u` en las sugerencias impresas.
+
+- 0.2.0 – 2025-09-23
+  - Añadido:
+    - Flags `--leave` y `--uninstall` para abandonar red y desinstalar ZeroTier.
+  - Cambiado:
+    - Detección de Raspberry Pi y reporte de SO/arquitectura.
+
+- 0.1.0 – 2025-09-23
+  - Inicial:
+    - Versión inicial del script para instalación, unión a red, espera de autorización y resumen; prueba de peer opcional.
+
+## Más información
+
+Datos específicos de esta red y comandos ��tiles:
+
+- Red: rotoapanta_vpn
+- Network ID: d5e5fb65374a3986
+- Subred (pool): 192.168.194.0/24
+
+Comandos rápidos:
+- Unir este equipo:
+  ```bash
+  sudo ./zerotier-rpi-setup.sh -n d5e5fb65374a3986
+  ```
+- Probar ping a otro miembro:
+  ```bash
+  sudo ./zerotier-rpi-setup.sh -n d5e5fb65374a3986 -p <IP_ZeroTier_del_peer> -t 5
+  ```
+- Abandonar la red:
+  ```bash
+  sudo ./zerotier-rpi-setup.sh -n d5e5fb65374a3986 --leave
+  ```
+- Desinstalar ZeroTier:
+  ```bash
+  sudo ./zerotier-rpi-setup.sh --uninstall
+  ```
+- Autorizar miembros: https://my.zerotier.com → Networks → rotoapanta_vpn → Members → marcar "Auth".
+
+Enlaces útiles:
+- ZeroTier Central: https://my.zerotier.com
+- Descargas ZeroTier: https://www.zerotier.com/download/
+- Documentación CLI: https://docs.zerotier.com/zerotier/cli
+- Guía Linux service: `systemctl status zerotier-one`
+
+## Enlaces
+
+[![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/roberto-carlos-toapanta-g/)
+
+[![twitter](https://img.shields.io/badge/twitter-1DA1F2?style=for-the-badge&logo=twitter&logoColor=white)](https://twitter.com/rotoapanta)
+
+
