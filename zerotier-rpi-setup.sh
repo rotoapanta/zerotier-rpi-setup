@@ -23,6 +23,17 @@ Ejemplos:
 EOF
 }
 
+# ========================
+# Progreso (Paso X/Y)
+# ========================
+STEP=0
+TOTAL_STEPS=0
+step() {
+  STEP=$((STEP+1))
+  echo
+  echo "===== Paso ${STEP}/${TOTAL_STEPS}: $* ====="
+}
+
 LEAVE_ONLY=0
 UNINSTALL_ONLY=0
 
@@ -43,7 +54,17 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
+# Definir total de pasos según el flujo elegido
 if [[ "$UNINSTALL_ONLY" -eq 1 ]]; then
+  TOTAL_STEPS=1
+elif [[ "$LEAVE_ONLY" -eq 1 ]]; then
+  TOTAL_STEPS=4
+else
+  TOTAL_STEPS=6
+fi
+
+if [[ "$UNINSTALL_ONLY" -eq 1 ]]; then
+  step "Detener y desinstalar ZeroTier"
   echo "→ Deteniendo y desinstalando ZeroTier..."
   systemctl stop zerotier-one || true
   apt-get update -y
@@ -167,6 +188,7 @@ OS_NAME="$(. /etc/os-release 2>/dev/null && echo "$PRETTY_NAME" || lsb_release -
 ARCH="$(dpkg --print-architecture 2>/dev/null || uname -m)"
 RPI_MODEL="$(get_rpi_model || true)"
 
+step "Detección de plataforma y entorno"
 if [[ "$RPI_MODEL" == *"Raspberry Pi"* ]]; then
   echo "→ Detectado Raspberry Pi: $RPI_MODEL"
   if [[ "$RPI_MODEL" =~ Raspberry[[:space:]]Pi[[:space:]]([0-9]+) ]]; then
@@ -186,6 +208,7 @@ echo "→ SO: $OS_NAME | Arquitectura: $ARCH"
 # ========================
 # Instalar ZeroTier (si falta)
 # ========================
+step "Instalación de ZeroTier (si falta)"
 if ! cmd_exists zerotier-cli; then
   echo "→ Instalando ZeroTier..."
   apt-get update -y
@@ -196,6 +219,7 @@ else
 fi
 
 # Asegurar servicio activo
+step "Activación del servicio y verificación de estado"
 systemctl enable zerotier-one >/dev/null 2>&1 || true
 systemctl restart zerotier-one
 sleep 2
@@ -205,20 +229,23 @@ zt_status
 
 # Salir de red si lo pidieron
 if [[ "$LEAVE_ONLY" -eq 1 ]]; then
+  step "Salir de la red $NETWORK_ID"
   zt_leave "$NETWORK_ID"
   print_summary "$NETWORK_ID"
   exit 0
 fi
 
 # Unirse a la red
+step "Unirse a la red $NETWORK_ID"
 zt_join "$NETWORK_ID"
 
 echo
 echo "ℹ Si ves el nodo 'PENDING' en https://my.zerotier.com, debes marcarlo como autorizado (Auth)."
 echo "  Red: $NETWORK_ID"
-echo
 
+echo
 # Esperar autorización
+step "Esperar autorización en ZeroTier Central"
 if wait_for_auth "$NETWORK_ID" "$WAIT_AUTH_SECS"; then
   :
 else
@@ -226,6 +253,7 @@ else
 fi
 
 # Mostrar resumen y probar peer (si se indicó)
+step "Resumen e (opcional) prueba de conectividad"
 print_summary "$NETWORK_ID"
 if [[ -n "$PEER_IP" ]]; then
   test_peer "$PEER_IP" "$PING_COUNT"
@@ -234,7 +262,7 @@ fi
 echo
 echo "✅ Listo."
 echo "Sugerencias:"
-echo "  • Conectar por SSH usando la IP ZeroTier:  ssh pi@\$(getent hosts \$(hostname) >/dev/null 2>&1 && echo \"\$(getent hosts \$(hostname) | awk '{print \$1}')\" || echo \"\$(get_zt_ip4)\")"
+echo "  • Conectar por SSH usando la IP ZeroTier:  ssh pi@\$(getent hosts \$(hostname) >/dev/null 2>&1 && echo \"\$(getent hosts \$(hostname) | awk '{print $1}')\" || echo \"\$(get_zt_ip4)\")"
 echo "  • Para ver el estado:                      sudo zerotier-cli status && sudo zerotier-cli listnetworks"
 echo "  • Para abandonar la red:                   sudo $0 -n $NETWORK_ID --leave"
 echo "  • Para desinstalar ZeroTier:               sudo $0 --uninstall"
