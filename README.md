@@ -13,7 +13,6 @@
 
 # <p align="center">Zerotier rpi setup</p>
 
-
 Script Bash para instalar, unir, verificar y desinstalar ZeroTier One en Raspberry Pi (y sistemas basados en Debian/Ubuntu en general). Automatiza la instalación del servicio, la unión a una red, la espera de autorización en ZeroTier Central y una prueba de conectividad opcional con ping. También permite abandonar una red o desinstalar ZeroTier.
 
 ---
@@ -25,7 +24,6 @@ Script Bash para instalar, unir, verificar y desinstalar ZeroTier One en Raspber
 - Un ID de red de ZeroTier (lo obtienes en https://my.zerotier.com).
 
 El script instala automáticamente dependencias mínimas (`curl`, `ca-certificates`, `gnupg`, `lsb-release`) y ZeroTier si no están presentes.
-
 
 ## Estructura del proyecto
 
