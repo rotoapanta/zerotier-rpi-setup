@@ -58,14 +58,13 @@ zerotier-rpi-setup/
    - Clona o copia este repositorio en el equipo objetivo (Raspberry Pi o Ubuntu).
 
    ```bash
-   git clone git@github.com:rotoapanta/zerotier-rpi-setup.git
+   $ git clone git@github.com:rotoapanta/zerotier-rpi-setup.git
    ```
 
 2) 🛠️ Despliegue con el script (recomendado)
    ```bash
-   chmod +x zerotier-rpi-setup.sh
-   sudo ./zerotier-rpi-setup.sh -n <NETWORK_ID>
-   # Para tu red actual: sudo ./zerotier-rpi-setup.sh -n d5e5fb65374a3986
+   $ chmod +x zerotier-rpi-setup.sh
+   $ sudo ./zerotier-rpi-setup.sh -n <NETWORK_ID>
    ```
    - El script instala dependencias si faltan, instala ZeroTier, habilita y reinicia el servicio `zerotier-one`, se une a la red y espera autorización.
 
@@ -74,62 +73,35 @@ zerotier-rpi-setup/
 
 4) 🔍 Verificar estado e IP
    ```bash
-   sudo zerotier-cli status
-   sudo zerotier-cli listnetworks
-   ip -o -4 addr show | awk '/zt/{print $4}'
+   $ sudo zerotier-cli status
+   $ sudo zerotier-cli listnetworks
+   $ ip -o -4 addr show | awk '/zt/{print $4}'
    ```
 
-5) 🧰 (Opcional) Registrar el script como comando del sistema
+5) 🧱 Firewall (si usas UFW)
    ```bash
-   sudo install -m 0755 zerotier-rpi-setup.sh /usr/local/bin/zerotier-rpi-setup
-   # Uso posterior:
-   sudo zerotier-rpi-setup -n <NETWORK_ID>
+   $ sudo ufw allow 9993/udp
    ```
 
-6) 🧱 Firewall (si usas UFW)
+6) 📜 Servicio y logs
    ```bash
-   sudo ufw allow 9993/udp
+   $ sudo systemctl enable zerotier-one
+   $ sudo systemctl status zerotier-one
+   $ sudo journalctl -u zerotier-one -n 200 --no-pager
    ```
 
-7) 📜 Servicio y logs
-   ```bash
-   sudo systemctl enable zerotier-one
-   sudo systemctl status zerotier-one
-   sudo journalctl -u zerotier-one -n 200 --no-pager
-   ```
-
-8) 🧪 Alternativa manual (sin el script)
-   ```bash
-   curl -s https://install.zerotier.com | sudo bash
-   sudo zerotier-cli join <NETWORK_ID>
-   ```
-
-9) 🧹 Reversión / limpieza
+7) 🧹 Reversión / limpieza
    ```bash
    # Salir de la red
-   sudo zerotier-cli leave <NETWORK_ID>
+   $ sudo zerotier-cli leave <NETWORK_ID>
    # o con el script
-   sudo ./zerotier-rpi-setup.sh -n <NETWORK_ID> --leave
+   $ sudo ./zerotier-rpi-setup.sh -n <NETWORK_ID> --leave
 
    # Desinstalar ZeroTier
-   sudo apt purge zerotier-one -y && sudo apt autoremove -y
+   $ sudo apt purge zerotier-one -y && sudo apt autoremove -y
    # o con el script
-   sudo ./zerotier-rpi-setup.sh --uninstall
+   $ sudo ./zerotier-rpi-setup.sh --uninstall
    ```
-
-## �� Uso rápido
-
-1) Dar permisos de ejecución al script:
-```bash
-chmod +x zerotier-rpi-setup.sh
-```
-
-2) Unirte a una red (reemplaza `NETWORK_ID` por el ID de tu red):
-```bash
-sudo ./zerotier-rpi-setup.sh -n <NETWORK_ID>
-```
-
-3) Autorizar el nuevo miembro en ZeroTier Central si aparece en estado "PENDING". El script espera hasta 180s por la autorización y luego muestra un resumen del estado de la red e IP asignada.
 
 ## 🆘 Ayuda y flags
 
@@ -152,23 +124,6 @@ Ejemplos:
 - --uninstall: Desinstala completamente ZeroTier.
 - -h | --help: Muestra la ayuda.
 
-## 🐧 Conectar desde Ubuntu
-
-1) Usando este script (recomendado en Debian/Ubuntu):
-```bash
-chmod +x zerotier-rpi-setup.sh
-sudo ./zerotier-rpi-setup.sh -n <NETWORK_ID>
-# Para tu red actual: sudo ./zerotier-rpi-setup.sh -n d5e5fb65374a3986
-```
-
-2) Instalación manual (sin el script):
-```bash
-curl -s https://install.zerotier.com | sudo bash
-sudo zerotier-cli join <NETWORK_ID>
-# Autoriza el miembro en Central y verifica con:
-sudo zerotier-cli listnetworks
-```
-
 ## 🔗 Conectar un nuevo dispositivo desde cero (paso a paso)
 
 Prerequisitos:
@@ -178,12 +133,12 @@ Prerequisitos:
 1) Linux / Raspberry Pi (Debian/Ubuntu)
    - Instala y une usando este script (recomendado):
      ```bash
-     chmod +x zerotier-rpi-setup.sh
-     sudo ./zerotier-rpi-setup.sh -n <NETWORK_ID>
+     $ chmod +x zerotier-rpi-setup.sh
+     $ sudo ./zerotier-rpi-setup.sh -n <NETWORK_ID>
      ```
    - Alternativa manual:
      ```bash
-     curl -s https://install.zerotier.com | sudo bash
+     $ curl -s https://install.zerotier.com | sudo bash
      sudo zerotier-cli join <NETWORK_ID>
      ```
 
@@ -291,26 +246,6 @@ Enlaces útiles:
 - ZeroTier Central: https://my.zerotier.com
 - Descargas ZeroTier: https://www.zerotier.com/download/
 - Documentación CLI: https://docs.zerotier.com/zerotier/cli
-
-## 🧭 Comandos rápidos
-- Unir este equipo:
-  ```bash
-  sudo ./zerotier-rpi-setup.sh -n d5e5fb65374a3986
-  ```
-- Probar ping a otro miembro:
-  ```bash
-  sudo ./zerotier-rpi-setup.sh -n d5e5fb65374a3986 -p <IP_ZeroTier_del_peer> -t 5
-  ```
-- Abandonar la red:
-  ```bash
-  sudo ./zerotier-rpi-setup.sh -n d5e5fb65374a3986 --leave
-  ```
-- Desinstalar ZeroTier:
-  ```bash
-  sudo ./zerotier-rpi-setup.sh --uninstall
-  ```
-- Autorizar miembros en ZeroTier Central:
-  https://my.zerotier.com → Networks → rotoapanta_vpn → Members → marcar "Auth".
 
 ## 🔗 Enlaces
 
