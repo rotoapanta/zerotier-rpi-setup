@@ -10,7 +10,7 @@
 [![Version](https://img.shields.io/badge/Version-1.0.0-brightgreen)](#changelog)
 ![GitHub forks](https://img.shields.io/github/forks/rotoapanta/zerotier-rpi-setup?style=social)
 
-<p align="right"><strong>English</strong> | <a href="README.md">Español</a></p>
+<p align="right"><strong>English</strong> | <a href="README.es.md">Español</a></p>
 
 # <p align="center">Zerotier rpi setup</p>
 
