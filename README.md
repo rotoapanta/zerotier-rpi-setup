@@ -55,7 +55,7 @@ zerotier-rpi-setup/
 ## 🚀 Implementación y despliegue
 
 <figure align="center">
-  <img src="images/zerotier-network.png" alt="ZeroTier Central mostrando la lista de redes (ejemplo rotoapanta_vpn)" width="800" loading="lazy" style="max-width:100%; height:auto; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.12);" />
+  <img src="images/zerotier-network.png" alt="ZeroTier Central mostrando la lista de redes (ejemplo rotoapanta_vpn)" width="500" loading="lazy" style="max-width:100%; height:auto; border-radius:6px; box-shadow:0 2px 8px rgba(0,0,0,0.12);" />
   <figcaption><sub>Figura 1. ZeroTier Central: listado de redes (ejemplo)</sub></figcaption>
 </figure>
 
