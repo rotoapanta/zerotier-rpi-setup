@@ -124,6 +124,16 @@ Nota: ZeroTier mantiene instaladores oficiales que el script utiliza de forma no
 
 ---
 
+## Estructura del proyecto
+
+```
+zerotier-rpi-setup/
+├── zerotier-rpi-setup.sh   # Script principal: instala, une, espera autorización y prueba conectividad
+└── README.md               # Documentación, guía de uso, solución de problemas y registro de cambios
+```
+
+---
+
 ## Conectar un nuevo dispositivo desde cero (paso a paso)
 
 Sigue estos pasos según tu plataforma para unir un nuevo equipo a tu red ZeroTier y verificar la conectividad.
