@@ -33,8 +33,6 @@ zerotier-rpi-setup/
 └── README.md               # Documentación, guía de uso, solución de problemas y registro de cambios
 ```
 
----
-
 ## Uso rápido
 
 1) Dar permisos de ejecución al script:
