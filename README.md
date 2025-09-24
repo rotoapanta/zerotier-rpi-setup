@@ -155,22 +155,6 @@ Prerequisitos:
    - App Store: https://apps.apple.com/app/zerotier-one/id1085978097
    - Únete con `<NETWORK_ID>`, permite el perfil VPN, activa ZeroTier en Ajustes si es necesario, autoriza en Central.
 
-## ↩️ Salir de la red / Desinstalar
-
-- Salir de la red (script):
-  ```bash
-  sudo ./zerotier-rpi-setup.sh -n <NETWORK_ID> --leave
-  ```
-- Desinstalar ZeroTier (script):
-  ```bash
-  sudo ./zerotier-rpi-setup.sh --uninstall
-  ```
-- Manual (Linux):
-  ```bash
-  sudo zerotier-cli leave <NETWORK_ID>
-  sudo apt purge zerotier-one && sudo apt autoremove
-  ```
-
 ## 🧩 Solución de problemas
 
 - ⚠️ Miembro en PENDING y sin IP
@@ -210,42 +194,15 @@ Este proyecto sigue el formato Keep a Changelog y Semantic Versioning.
 - 
 
 - 1.0.0 – 2025-09-23
-  - Añadido:
-    - Numeración de progreso “Paso X/Y” en el flujo principal del script.
-    - Guía de conexión desde cero por plataforma (Linux/Raspberry Pi, Windows, macOS, Android, iPhone iOS).
-  - Cambiado:
-    - Sugerencias finales simplificadas para evitar expansiones complejas de shell.
-  - Corregido:
-    - Expansión accidental de `$1` bajo `set -u` en una sugerencia impresa.
-  - Documentación:
-    - README reorganizado con secciones nuevas: iPhone (iOS), Change log y “Más información (de acuerdo a este proyecto)”.
-
-- 0.3.1 – 2025-09-23
-  - Corregido:
-    - Comillas/codificación extraña en el README.
-  - Cambiado:
-    - Sugerencias finales del script simplificadas para evitar expansión de variables con `set -u`.
+  - Lanzamiento estable: progreso “Paso X/Y”, guía multi-plataforma, sugerencias simplificadas y README reorganizado.
 
 - 0.3.0 – 2025-09-23
-  - Añadido:
-    - Guía “Conectar un nuevo dispositivo desde cero” por plataforma (Linux/Raspberry Pi, Windows, macOS, Android, iPhone iOS).
-    - Sección específica para iPhone (iOS) con pasos y notas.
-  - Cambiado:
-    - Salida del script con “Paso X/Y” para visualizar el progreso.
-  - Corregido:
-    - Evitada la expansión de `$1` bajo `set -u` en las sugerencias impresas.
-
-- 0.2.0 – 2025-09-23
-  - Añadido:
-    - Flags `--leave` y `--uninstall` para abandonar red y desinstalar ZeroTier.
-  - Cambiado:
-    - Detección de Raspberry Pi y reporte de SO/arquitectura.
+  - Prelanzamiento con guía “Conectar un nuevo dispositivo” e integración iOS.
 
 - 0.1.0 – 2025-09-23
-  - Inicial:
-    - Versión inicial del script para instalación, unión a red, espera de autorización y resumen; prueba de peer opcional.
+  - Versión inicial del script.
 
-## ℹ️ Más información
+## ℹ️ Más Información
 
 Enlaces útiles:
 - ZeroTier Central: https://my.zerotier.com
