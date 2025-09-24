@@ -57,6 +57,10 @@ zerotier-rpi-setup/
 1) 📦 Preparación
    - Clona o copia este repositorio en el equipo objetivo (Raspberry Pi o Ubuntu).
 
+      ```bash
+   git clone git@github.com:rotoapanta/zerotier-rpi-setup.git
+   ```
+
 2) 🛠️ Despliegue con el script (recomendado)
    ```bash
    chmod +x zerotier-rpi-setup.sh
