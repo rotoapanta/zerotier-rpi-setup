@@ -310,13 +310,12 @@ Este proyecto sigue el formato Keep a Changelog y Semantic Versioning.
 
 ## Más información
 
-Datos específicos de esta red y comandos ��tiles:
+Enlaces útiles:
+- ZeroTier Central: https://my.zerotier.com
+- Descargas ZeroTier: https://www.zerotier.com/download/
+- Documentación CLI: https://docs.zerotier.com/zerotier/cli
 
-- Red: rotoapanta_vpn
-- Network ID: d5e5fb65374a3986
-- Subred (pool): 192.168.194.0/24
-
-Comandos rápidos:
+## Comandos rápidos
 - Unir este equipo:
   ```bash
   sudo ./zerotier-rpi-setup.sh -n d5e5fb65374a3986
@@ -333,13 +332,8 @@ Comandos rápidos:
   ```bash
   sudo ./zerotier-rpi-setup.sh --uninstall
   ```
-- Autorizar miembros: https://my.zerotier.com → Networks → rotoapanta_vpn → Members → marcar "Auth".
-
-Enlaces útiles:
-- ZeroTier Central: https://my.zerotier.com
-- Descargas ZeroTier: https://www.zerotier.com/download/
-- Documentación CLI: https://docs.zerotier.com/zerotier/cli
-- Guía Linux service: `systemctl status zerotier-one`
+- Autorizar miembros en ZeroTier Central:
+  https://my.zerotier.com → Networks → rotoapanta_vpn → Members → marcar "Auth".
 
 ## Enlaces
 
