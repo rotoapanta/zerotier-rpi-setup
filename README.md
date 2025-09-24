@@ -18,7 +18,7 @@ Bash script to install, join, verify, and uninstall ZeroTier One on Raspberry Pi
 
 ---
 
-## Features
+## ✨ Features
 
 - Detects if the device is a Raspberry Pi and shows the model (Raspberry Pi 3/5 and others), OS and architecture.
 - Installs ZeroTier if not present (with minimal dependencies).
@@ -27,7 +27,7 @@ Bash script to install, join, verify, and uninstall ZeroTier One on Raspberry Pi
 - Prints a summary: client status (`zerotier-cli status`), joined networks (`listnetworks`), `zt*` interfaces and the assigned ZeroTier IPv4.
 - If `-p` is provided, performs a ping test to the specified peer IP.
 
-## System requirements
+## 🛠️ System requirements
 
 - Supported systems:
   - Debian 11/12, Ubuntu 20.04/22.04/24.04 (Server/Desktop)
@@ -46,7 +46,7 @@ Bash script to install, join, verify, and uninstall ZeroTier One on Raspberry Pi
 
 Note: if ZeroTier is already installed, the script detects it and won’t reinstall.
 
-## Project structure
+## 🗂️ Project structure
 
 ```
 zerotier-rpi-setup/
