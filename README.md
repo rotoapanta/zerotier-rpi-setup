@@ -49,8 +49,6 @@ sudo ./zerotier-rpi-setup.sh -n <NETWORK_ID>
 
 3) Autoriza el nuevo miembro en ZeroTier Central si aparece en estado "PENDING". El script espera hasta 180s por la autorización y luego muestra un resumen del estado de la red e IP asignada.
 
----
-
 ## Ayuda y flags
 
 ```text
@@ -72,17 +70,13 @@ Ejemplos:
 - --uninstall: Desinstala completamente ZeroTier.
 - -h | --help: Muestra la ayuda.
 
----
-
-## ¿Qué hace el script?
+## Características del proyecto
 
 - Detecta si el equipo es una Raspberry Pi e informa el modelo (Raspberry Pi 3/5 y otros). También muestra el sistema operativo y la arquitectura detectada.
 - Instala ZeroTier si no está presente (y dependencias mínimas). Habilita y reinicia el servicio `zerotier-one`.
 - Se une a la red indicada y espera hasta 180 segundos a que autorices el equipo en ZeroTier Central.
 - Muestra un resumen: estado del cliente (`zerotier-cli status`), redes a las que pertenece (`listnetworks`), interfaces `zt*` y la IP ZeroTier asignada (IPv4).
 - Si se indicó `-p`, realiza una prueba de ping al peer configurado.
-
----
 
 ## Conectar desde Ubuntu
 
@@ -117,8 +111,6 @@ ip -o -4 addr show | awk '/zt/{print $4}'
 ping <IP_ZeroTier_del_peer>
 ```
 
----
-
 ## Conectar un nuevo dispositivo desde cero (paso a paso)
 
 Sigue estos pasos según tu plataforma para unir un nuevo equipo a tu red ZeroTier y verificar la conectividad.
@@ -151,7 +143,6 @@ ip -o -4 addr show | awk '/zt/{print $4}'
 
 5) Conectarte por SSH a una Raspberry: `ssh pi@<IP_ZeroTier>`
 
-—
 
 Alternativa manual (sin script):
 
@@ -162,7 +153,6 @@ sudo zerotier-cli join <NETWORK_ID>
 sudo zerotier-cli listnetworks
 ```
 
-### Ubuntu
 
 ### Salir de la red / Desinstalar
 
@@ -182,8 +172,6 @@ Notas:
 - Tras autorizar, el estado debe verse como `OK` en `zerotier-cli listnetworks` y tendrás una IP del pool configurado (por ejemplo 192.168.194.0/24).
 - Si no recibes IP, revisa los Pools (Auto-Assign) y reglas en la red de ZeroTier.
 
----
-
 ## Solución de problemas
 
 - Miembro en PENDING y sin IP: Ingresa a https://my.zerotier.com, abre tu red y autoriza el nuevo miembro (checkbox de Auth). Asegúrate de que la red tenga rangos de direcciones configurados (Auto-Assign) si esperas una IP gestionada.
@@ -192,8 +180,6 @@ Notas:
 - Ver logs/estado del servicio:
   - `sudo systemctl status zerotier-one`
   - `sudo journalctl -u zerotier-one -n 200 --no-pager`
-
----
 
 ## Desinstalación
 
@@ -205,13 +191,9 @@ sudo ./zerotier-rpi-setup.sh --uninstall
 
 Esto detiene el servicio, realiza `apt purge zerotier-one` y `apt autoremove`.
 
----
-
 ## Opciones avanzadas
 
 - Tiempo de espera de autorización: El script espera hasta 180s por la autorización en ZeroTier Central. Si deseas modificarlo, edita la variable `WAIT_AUTH_SECS` al inicio del script.
-
----
 
 ## Comentarios
 
