@@ -1,15 +1,15 @@
 
 [![Python](https://img.shields.io/badge/Python-3.11-brightgreen)](https://www.python.org/) 
-![GitHub issues](https://img.shields.io/github/issues/rotoapanta/serial-tilt-zbx) 
-![GitHub repo size](https://img.shields.io/github/repo-size/rotoapanta/serial-tilt-zbx) 
-![GitHub last commit](https://img.shields.io/github/last-commit/rotoapanta/serial-tilt-zbx)
+![GitHub issues](https://img.shields.io/github/issues/rotoapanta/zerotier-rpi-setup) 
+![GitHub repo size](https://img.shields.io/github/repo-size/rotoapanta/zerotier-rpi-setup) 
+![GitHub last commit](https://img.shields.io/github/last-commit/rotoapanta/zerotier-rpi-setup)
 [![Discord Invite](https://img.shields.io/badge/discord-join%20now-green)](https://discord.gg/bf6rWDbJ) 
 [![Docker](https://img.shields.io/badge/Docker-No-brightgreen)](https://www.docker.com/) 
 [![Linux](https://img.shields.io/badge/Linux-Supported-brightgreen)](https://www.linux.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![Author](https://img.shields.io/badge/Roberto%20-Toapanta-brightgreen)](https://www.linkedin.com/in/roberto-carlos-toapanta-g/) 
 [![Version](https://img.shields.io/badge/Version-1.0.0-brightgreen)](#registro-de-cambios) 
-![GitHub forks](https://img.shields.io/github/forks/rotoapanta/serial-tilt-zbx?style=social) 
+![GitHub forks](https://img.shields.io/github/forks/rotoapanta/zerotier-rpi-setup?style=social) 
 
 # <p align="center">Zerotier rpi setup</p>
 
@@ -25,6 +25,15 @@ Script Bash para instalar, unir, verificar y desinstalar ZeroTier One en Raspber
 - Un ID de red de ZeroTier (lo obtienes en https://my.zerotier.com).
 
 El script instala automáticamente dependencias mínimas (`curl`, `ca-certificates`, `gnupg`, `lsb-release`) y ZeroTier si no están presentes.
+
+
+## Estructura del proyecto
+
+```
+zerotier-rpi-setup/
+├── zerotier-rpi-setup.sh   # Script principal: instala, une, espera autorización y prueba conectividad
+└── README.md               # Documentación, guía de uso, solución de problemas y registro de cambios
+```
 
 ---
 
@@ -69,42 +78,6 @@ Ejemplos:
 
 ---
 
-## Ejemplos comunes
-
-- Unirse a una red:
-
-```bash
-sudo ./zerotier-rpi-setup.sh -n 8056c2e21c000001
-```
-
-- Unirse y probar conectividad a un peer (IP ZeroTier):
-
-```bash
-sudo ./zerotier-rpi-setup.sh -n 8056c2e21c000001 -p 10.147.20.12 -t 5
-```
-
-- Abandonar una red:
-
-```bash
-sudo ./zerotier-rpi-setup.sh -n 8056c2e21c000001 --leave
-```
-
-- Desinstalar ZeroTier por completo:
-
-```bash
-sudo ./zerotier-rpi-setup.sh --uninstall
-```
-
-- Consultar estado e interfaces (comandos útiles que también sugiere el script):
-
-```bash
-sudo zerotier-cli status
-sudo zerotier-cli listnetworks
-ip -o -4 addr show | awk '/zt/{print $4}'
-```
-
----
-
 ## ¿Qué hace el script?
 
 - Detecta si el equipo es una Raspberry Pi e informa el modelo (Raspberry Pi 3/5 y otros). También muestra el sistema operativo y la arquitectura detectada.
@@ -115,21 +88,37 @@ ip -o -4 addr show | awk '/zt/{print $4}'
 
 ---
 
-## Compatibilidad
+## Conectar desde Ubuntu
 
-- Sistemas basados en Debian/Ubuntu (incluye Raspberry Pi OS).
-- Arquitecturas: ARM (armhf/arm64) y x86_64/amd64.
+Requisitos: Ubuntu 20.04 o superior con privilegios de sudo y acceso a Internet.
 
-Nota: ZeroTier mantiene instaladores oficiales que el script utiliza de forma no interactiva (`curl -s https://install.zerotier.com | bash`). Si prefieres, puedes instalar ZeroTier manualmente antes de ejecutar el script.
-
----
-
-## Estructura del proyecto
-
+Opción A — usando este script (recomendado en Debian/Ubuntu):
+```bash
+# Copia este repositorio o descarga el script en la máquina Ubuntu
+chmod +x zerotier-rpi-setup.sh
+sudo ./zerotier-rpi-setup.sh -n <NETWORK_ID>
+# Para tu red actual: sudo ./zerotier-rpi-setup.sh -n d5e5fb65374a3986
 ```
-zerotier-rpi-setup/
-├── zerotier-rpi-setup.sh   # Script principal: instala, une, espera autorización y prueba conectividad
-└── README.md               # Documentación, guía de uso, solución de problemas y registro de cambios
+
+Opción B — instalación manual sin el script:
+```bash
+# Instalar ZeroTier (instalador oficial)
+curl -s https://install.zerotier.com | sudo bash
+
+# Unirse a la red (reemplaza por tu NETWORK_ID)
+sudo zerotier-cli join <NETWORK_ID>
+# Para tu red actual: sudo zerotier-cli join d5e5fb65374a3986
+
+# Autoriza el nuevo miembro en ZeroTier Central (si queda PENDING)
+# https://my.zerotier.com → Networks → tu_red → Members → marcar "Auth"
+
+# Verificar estado e IP asignada
+sudo zerotier-cli status
+sudo zerotier-cli listnetworks
+ip -o -4 addr show | awk '/zt/{print $4}'
+
+# (Opcional) Probar conectividad a otro miembro
+ping <IP_ZeroTier_del_peer>
 ```
 
 ---
@@ -177,38 +166,7 @@ sudo zerotier-cli join <NETWORK_ID>
 sudo zerotier-cli listnetworks
 ```
 
-### Windows
-
-1) Descarga e instala "ZeroTier One" desde https://www.zerotier.com/download/.
-2) Abre el icono de ZeroTier en la bandeja del sistema → Join Network → pega `<NETWORK_ID>` → Join.
-3) En ZeroTier Central autoriza el nuevo miembro.
-4) Comprueba la IP asignada en la app de ZeroTier o con `ipconfig` (adaptador ZeroTier).
-5) Prueba conectividad con `ping <IP_ZeroTier_del_peer>`.
-
-### macOS
-
-1) Descarga el instalador (.pkg) desde https://www.zerotier.com/download/ e instálalo.
-2) Menú de ZeroTier (barra superior) → Join Network → `<NETWORK_ID>`.
-3) Autoriza el miembro en Central.
-4) Verifica IP en la app de ZeroTier o con `ifconfig` (interfaz `zt*`).
-5) Prueba `ping <IP_ZeroTier_del_peer>`.
-
-### iPhone (iOS)
-
-1) Instala "ZeroTier One" desde App Store: https://apps.apple.com/app/zerotier-one/id1085978097
-2) Abre ZeroTier → Join Network (+) → introduce `<NETWORK_ID>`.
-3) Cuando iOS lo pida, pulsa "Permitir" para añadir la configuración de VPN (se creará un perfil de VPN).
-4) Activa el interruptor de la red. Si no se conecta, ve a Ajustes → VPN y activa "ZeroTier".
-5) En ZeroTier Central autoriza el nuevo miembro.
-6) Verifica la IP asignada dentro de la app (interfaz `zt*`) y que el estado sea "OK".
-7) Prueba acceso a otros miembros:
-   - SSH a una Raspberry: usa una app como Termius/Blink y conéctate a `ssh pi@<IP_ZeroTier_del_equipo>`.
-   - HTTP/Servicios: accede a `http(s)://<IP_ZeroTier_del_equipo>:<puerto>` si hay servicios expuestos.
-
-Notas iOS:
-- Si no responde a ping ICMP, no es inusual en iOS; valida conectividad intentando SSH/HTTP hacia otros miembros.
-- Para mantener la conexión en segundo plano, deja activo el VPN de ZeroTier en Ajustes. Evita modos de ahorro extremo de batería.
-- iCloud Private Relay o perfiles MDM con restricciones pueden interferir con la VPN.
+### Ubuntu
 
 ### Salir de la red / Desinstalar
 
