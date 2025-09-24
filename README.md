@@ -17,13 +17,38 @@ Script Bash para instalar, unir, verificar y desinstalar ZeroTier One en Raspber
 
 ---
 
-## Requisitos
+## Características
 
-- Ejecutar el script como root (usar `sudo`).
-- Conexión a Internet y acceso a `apt`.
-- Un ID de red de ZeroTier (lo obtienes en https://my.zerotier.com).
+- Detecta si el equipo es una Raspberry Pi e informa el modelo (Raspberry Pi 3/5 y otros). También muestra el sistema operativo y la arquitectura detectada.
+- Instala ZeroTier si no está presente (y dependencias mínimas). Habilita y reinicia el servicio `zerotier-one`.
+- Se une a la red indicada y espera hasta 180 segundos a que autorices el equipo en ZeroTier Central.
+- Muestra un resumen: estado del cliente (`zerotier-cli status`), redes a las que pertenece (`listnetworks`), interfaces `zt*` y la IP ZeroTier asignada (IPv4).
+- Si se indicó `-p`, realiza una prueba de ping al peer configurado.
 
-El script instala automáticamente dependencias mínimas (`curl`, `ca-certificates`, `gnupg`, `lsb-release`) y ZeroTier si no están presentes.
+## Requisitos del Sistema
+
+- Sistemas soportados:
+  - Debian 11/12, Ubuntu 20.04/22.04/24.04 (Server/Desktop)
+  - Raspberry Pi OS Bullseye/Bookworm (arm64/armhf)
+  - Otros derivados de Debian pueden funcionar, pero no están probados
+- Permisos: cuenta con privilegios de administrador (sudo) para instalar paquetes y gestionar servicios.
+- Red y puertos:
+  - Salida a Internet vía HTTPS (TCP 443) para descargar el instalador.
+  - Tráfico UDP 9993 abierto hacia/desde Internet (requerido por ZeroTier).
+  - Si usas UFW: `sudo ufw allow 9993/udp`
+- Paquetes y herramientas:
+  - Requiere `apt`, `systemd` (systemctl) y `bash`.
+  - El script instalará automáticamente: `curl`, `ca-certificates`, `gnupg`, `lsb-release` (si faltan).
+- Arquitecturas compatibles: `amd64/x86_64`, `arm64/aarch64`, `armhf`.
+- Recursos mínimos: ~50 MB libres en disco y ~50 MB de RAM para el servicio.
+- Cuenta y red ZeroTier:
+  - Una cuenta en https://my.zerotier.com y el Network ID de tu red.
+  - Opcional: IP ZeroTier de un peer para pruebas de ping (`-p`) y cantidad de paquetes (`-t`).
+- Fecha y hora correctas (NTP recomendado) para evitar problemas de TLS.
+- Entornos con proxy: exporta `http_proxy`/`https_proxy` antes de ejecutar, si aplica.
+- Firewalls/SELinux/AppArmor: permite el tráfico de `zerotier-one`; revisa políticas si hay restricciones.
+
+Nota: si ya tienes ZeroTier instalado, el script lo detecta y no lo reinstala.
 
 ## Estructura del proyecto
 
@@ -69,14 +94,6 @@ Ejemplos:
 - --leave: Abandona la red especificada (no se desinstala el servicio).
 - --uninstall: Desinstala completamente ZeroTier.
 - -h | --help: Muestra la ayuda.
-
-## Características del proyecto
-
-- Detecta si el equipo es una Raspberry Pi e informa el modelo (Raspberry Pi 3/5 y otros). También muestra el sistema operativo y la arquitectura detectada.
-- Instala ZeroTier si no está presente (y dependencias mínimas). Habilita y reinicia el servicio `zerotier-one`.
-- Se une a la red indicada y espera hasta 180 segundos a que autorices el equipo en ZeroTier Central.
-- Muestra un resumen: estado del cliente (`zerotier-cli status`), redes a las que pertenece (`listnetworks`), interfaces `zt*` y la IP ZeroTier asignada (IPv4).
-- Si se indicó `-p`, realiza una prueba de ping al peer configurado.
 
 ## Conectar desde Ubuntu
 
