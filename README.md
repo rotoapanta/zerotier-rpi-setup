@@ -187,11 +187,7 @@ Prerequisitos:
    - Instala ZeroTier One desde https://www.zerotier.com/download/.
    - Join Network con `<NETWORK_ID>`, autoriza en Central, verifica IP.
 
-3) macOS
-   - Instala el .pkg desde https://www.zerotier.com/download/.
-   - Join Network con `<NETWORK_ID>`, autoriza en Central, verifica con `ifconfig` (interfaz `zt*`).
-
-4) iPhone (iOS)
+3) iPhone (iOS)
    - App Store: https://apps.apple.com/app/zerotier-one/id1085978097
    - Únete con `<NETWORK_ID>`, permite el perfil VPN, activa ZeroTier en Ajustes si es necesario, autoriza en Central.
 
@@ -225,18 +221,6 @@ Prerequisitos:
   sudo systemctl status zerotier-one
   sudo journalctl -u zerotier-one -n 200 --no-pager
   ```
-
-## 🧹 Desinstalación
-
-```bash
-sudo ./zerotier-rpi-setup.sh --uninstall
-```
-
-Esto detiene el servicio, realiza `apt purge zerotier-one` y `apt autoremove`.
-
-## 🔧 Opciones avanzadas
-
-- Tiempo de espera de autorización: variable `WAIT_AUTH_SECS` al inicio del script (por defecto 180s).
 
 ## 💬 Comentarios
 
