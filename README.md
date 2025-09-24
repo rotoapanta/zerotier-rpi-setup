@@ -54,10 +54,10 @@ zerotier-rpi-setup/
 
 ## 🚀 Implementación y despliegue
 
-<figure align="center">
-  <img src="images/zerotier-network.png" alt="ZeroTier Central mostrando la lista de redes" width="500">
-  <figcaption><sub>Figura 1. ZeroTier Central: listado de redes (ejemplo)</sub></figcaption>
-</figure>
+<p align="center">
+  <img src="images/zerotier-network.png" alt="Arquitectura de conexión con ZeroTier" width="500" loading="lazy" style="max-width:100%; height:auto; display:block; margin:0 auto;" />
+</p>
+<p align="center"><sub>Figura 1. Arquitectura de conexión con ZeroTier</sub></p>
 
 1) 📦 Preparación
    - Clona o copia este repositorio en el equipo objetivo (Raspberry Pi o Ubuntu).
