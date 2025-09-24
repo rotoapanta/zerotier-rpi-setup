@@ -180,15 +180,15 @@ Si tienes comentarios o sugerencias, contáctanos en robertocarlos.toapanta@gmai
 
 Para soporte, escribe a robertocarlos.toapanta@gmail.com o únete a nuestro canal de Discord.
 
-## Licencia
+## 📄 Licencia
 
 [MIT](https://opensource.org/licenses/MIT)
 
-## Autores
+## 👥 Autores
 
 - [@rotoapanta](https://github.com/rotoapanta)
 
-## Registro de cambios
+## 📜 Registro de cambios
 
 Este proyecto sigue el formato Keep a Changelog y Semantic Versioning.
 

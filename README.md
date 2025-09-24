@@ -181,15 +181,15 @@ For comments or suggestions: robertocarlos.toapanta@gmail.com
 
 For support, email robertocarlos.toapanta@gmail.com or join our Discord channel.
 
-## License
+## 📄 License
 
 [MIT](https://opensource.org/licenses/MIT)
 
-## Authors
+## 👥 Authors
 
 - [@rotoapanta](https://github.com/rotoapanta)
 
-## Changelog
+## 📜 Changelog
 
 This project follows Keep a Changelog and Semantic Versioning.
 
