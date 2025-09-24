@@ -129,7 +129,7 @@ Ejemplos:
 - --uninstall: Desinstala completamente ZeroTier.
 - -h | --help: Muestra la ayuda.
 
-## 🔗 Conectar un nuevo dispositivo desde cero (paso a paso)
+## 🔗 Conectar un nuevo dispositivo
 
 Prerequisitos:
 - Tener el `NETWORK_ID` de tu red (en https://my.zerotier.com → Networks).
